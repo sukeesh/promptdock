@@ -1,0 +1,1110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PromptDock Product Mock</title>
+  <style>
+    :root {
+      --ink: #17201b;
+      --muted: #5d6a61;
+      --paper: #f7f8f3;
+      --panel: #ffffff;
+      --rule: #d7ded1;
+      --rule-strong: #aab7a7;
+      --spruce: #21483a;
+      --moss: #6f8a5d;
+      --copper: #b56942;
+      --steel: #3b5f73;
+      --mist: #e8ede5;
+      --warn: #f4dfbf;
+      --shadow: 0 18px 45px rgba(23, 32, 27, .12);
+      color-scheme: light;
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(33, 72, 58, .055) 1px, transparent 1px),
+        linear-gradient(0deg, rgba(33, 72, 58, .045) 1px, transparent 1px),
+        var(--paper);
+      background-size: 32px 32px;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .page {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 44px;
+      margin-bottom: 34px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 760;
+      font-size: 18px;
+    }
+
+    .mark {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--spruce);
+      display: grid;
+      place-items: center;
+      color: var(--spruce);
+      border-radius: 7px;
+      position: relative;
+      background: var(--panel);
+    }
+
+    .mark::before,
+    .mark::after {
+      content: "";
+      position: absolute;
+      width: 12px;
+      height: 2px;
+      background: var(--copper);
+      left: 8px;
+    }
+
+    .mark::before {
+      top: 10px;
+    }
+
+    .mark::after {
+      top: 18px;
+      width: 16px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 8px;
+      padding: 4px;
+      border: 1px solid var(--rule);
+      background: rgba(255, 255, 255, .66);
+      border-radius: 8px;
+      overflow-x: auto;
+    }
+
+    .nav a {
+      color: var(--muted);
+      text-decoration: none;
+      white-space: nowrap;
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    .nav a:hover,
+    .nav a:focus-visible {
+      color: var(--ink);
+      background: var(--mist);
+      outline: none;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, .95fr) minmax(360px, 1.05fr);
+      gap: 34px;
+      align-items: center;
+      padding: 12px 0 38px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin: 0;
+    }
+
+    h1 {
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      font-weight: 650;
+      font-size: clamp(46px, 7vw, 92px);
+      line-height: .94;
+      letter-spacing: 0;
+      max-width: 780px;
+    }
+
+    .lede {
+      max-width: 620px;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.56;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    .button {
+      min-height: 40px;
+      border: 1px solid var(--spruce);
+      border-radius: 7px;
+      background: var(--spruce);
+      color: #fff;
+      padding: 9px 14px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .button.secondary {
+      color: var(--spruce);
+      background: rgba(255, 255, 255, .72);
+    }
+
+    .product-frame {
+      background: #f2f4ef;
+      border: 1px solid var(--rule-strong);
+      box-shadow: var(--shadow);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .mac-strip {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 12px;
+      border-bottom: 1px solid var(--rule);
+      background: #e5eae2;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .traffic {
+      display: flex;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: #cf6354;
+    }
+
+    .dot:nth-child(2) {
+      background: #d7a747;
+    }
+
+    .dot:nth-child(3) {
+      background: #6f9c65;
+    }
+
+    .app-mock {
+      display: grid;
+      grid-template-columns: 184px minmax(0, 1fr) 250px;
+      min-height: 430px;
+      background: var(--panel);
+    }
+
+    .sidebar {
+      background: #edf1ea;
+      border-right: 1px solid var(--rule);
+      padding: 14px;
+    }
+
+    .side-title {
+      font-weight: 760;
+      font-size: 13px;
+      color: var(--spruce);
+      margin-bottom: 10px;
+    }
+
+    .side-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 8px 9px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    .side-item.active {
+      background: var(--panel);
+      color: var(--ink);
+      font-weight: 720;
+      box-shadow: inset 3px 0 0 var(--copper);
+    }
+
+    .main-pane {
+      padding: 16px;
+      min-width: 0;
+    }
+
+    .search-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .search {
+      min-height: 38px;
+      border: 1px solid var(--rule);
+      border-radius: 7px;
+      padding: 0 12px;
+      background: #fbfcfa;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .icon-button {
+      width: 38px;
+      height: 38px;
+      border-radius: 7px;
+      border: 1px solid var(--rule);
+      background: var(--panel);
+      color: var(--spruce);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+    }
+
+    .prompt-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .prompt-row {
+      border: 1px solid var(--rule);
+      border-radius: 7px;
+      padding: 11px 12px;
+      background: #fff;
+    }
+
+    .prompt-row.selected {
+      border-color: var(--spruce);
+      box-shadow: inset 0 0 0 1px var(--spruce);
+    }
+
+    .prompt-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+      font-weight: 740;
+      font-size: 14px;
+    }
+
+    .prompt-meta {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .tag {
+      background: var(--mist);
+      color: var(--spruce);
+      border-radius: 5px;
+      padding: 3px 6px;
+      font-weight: 680;
+    }
+
+    .detail {
+      border-left: 1px solid var(--rule);
+      padding: 16px;
+      background: #fbfcfa;
+    }
+
+    .editor-title {
+      font-weight: 780;
+      margin-bottom: 10px;
+    }
+
+    .template-box {
+      min-height: 156px;
+      border: 1px solid var(--rule);
+      border-radius: 7px;
+      background: #fff;
+      padding: 12px;
+      color: #26332b;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    .slot {
+      color: var(--steel);
+      font-weight: 800;
+    }
+
+    .detail-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .mini-action {
+      min-height: 34px;
+      border-radius: 6px;
+      border: 1px solid var(--rule);
+      background: #fff;
+      color: var(--spruce);
+      font-weight: 700;
+    }
+
+    section {
+      padding: 44px 0;
+      border-top: 1px solid var(--rule);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, .72fr) minmax(280px, .28fr);
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 22px;
+    }
+
+    h2 {
+      font-family: ui-serif, Georgia, "Times New Roman", serif;
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: 1;
+      letter-spacing: 0;
+      font-weight: 650;
+      max-width: 760px;
+    }
+
+    .section-note {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .argument-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .argument {
+      border: 1px solid var(--rule);
+      background: rgba(255, 255, 255, .72);
+      border-radius: 8px;
+      padding: 16px;
+      min-height: 180px;
+    }
+
+    .argument h3,
+    .persona h3,
+    .mock-caption h3 {
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .argument p,
+    .persona p,
+    .mock-caption p {
+      color: var(--muted);
+      line-height: 1.52;
+      font-size: 14px;
+    }
+
+    .persona-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .persona {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .persona ul,
+    .priority-list {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .mock-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, .48fr);
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .menu-bar-scene {
+      background: #cfd8d3;
+      border: 1px solid #9eaaa4;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .desktop-bar {
+      height: 30px;
+      background: rgba(247, 249, 246, .94);
+      border-bottom: 1px solid rgba(23, 32, 27, .16);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 12px;
+      font-size: 13px;
+      color: #1f2d25;
+    }
+
+    .bar-left,
+    .bar-right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .bar-right {
+      gap: 10px;
+      justify-content: flex-end;
+      white-space: nowrap;
+    }
+
+    .menu-glyph {
+      display: inline-grid;
+      place-items: center;
+      width: 19px;
+      height: 19px;
+      border-radius: 5px;
+      border: 1px solid var(--spruce);
+      color: var(--spruce);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .popover {
+      width: min(440px, calc(100% - 28px));
+      margin: 18px 14px 26px auto;
+      background: rgba(255, 255, 255, .96);
+      border: 1px solid rgba(23, 32, 27, .24);
+      border-radius: 8px;
+      box-shadow: 0 22px 48px rgba(23, 32, 27, .24);
+      padding: 12px;
+    }
+
+    .palette-search {
+      height: 40px;
+      border: 1px solid var(--rule);
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .quick-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border-radius: 7px;
+      border: 1px solid transparent;
+    }
+
+    .quick-row.active {
+      border-color: var(--spruce);
+      background: #edf3ee;
+    }
+
+    .quick-title {
+      font-weight: 760;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
+
+    .quick-sub {
+      color: var(--muted);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .shortcut {
+      color: var(--muted);
+      font-size: 12px;
+      border: 1px solid var(--rule);
+      border-radius: 5px;
+      padding: 3px 6px;
+      background: #fff;
+      white-space: nowrap;
+    }
+
+    .mock-caption {
+      border-left: 4px solid var(--copper);
+      padding: 4px 0 4px 14px;
+    }
+
+    .composer {
+      display: grid;
+      grid-template-columns: 260px minmax(0, 1fr);
+      background: #fff;
+      border: 1px solid var(--rule-strong);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .var-panel {
+      background: #edf1ea;
+      border-right: 1px solid var(--rule);
+      padding: 16px;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field label {
+      display: block;
+      font-weight: 720;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .fake-input {
+      min-height: 36px;
+      border: 1px solid var(--rule);
+      border-radius: 7px;
+      background: #fff;
+      padding: 8px 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .output-panel {
+      padding: 16px;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .segmented {
+      display: inline-flex;
+      border: 1px solid var(--rule);
+      border-radius: 7px;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .segment {
+      border: 0;
+      border-right: 1px solid var(--rule);
+      background: transparent;
+      padding: 8px 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .segment:last-child {
+      border-right: 0;
+    }
+
+    .segment.active {
+      background: var(--spruce);
+      color: #fff;
+      font-weight: 740;
+    }
+
+    .preview {
+      border: 1px solid var(--rule);
+      border-radius: 7px;
+      background: #fbfcfa;
+      min-height: 244px;
+      padding: 16px;
+      line-height: 1.55;
+      font-size: 14px;
+      color: #27362e;
+    }
+
+    .snippets {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .snippet {
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      background: #fff;
+      padding: 14px;
+    }
+
+    .snippet strong {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .snippet code {
+      display: block;
+      white-space: pre-wrap;
+      color: #2d3a31;
+      background: #f5f7f2;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 10px;
+      font-size: 12px;
+      line-height: 1.45;
+      min-height: 112px;
+    }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .priority {
+      background: #fff;
+      border: 1px solid var(--rule);
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .priority h3 {
+      margin-bottom: 4px;
+      font-size: 18px;
+    }
+
+    .priority .status {
+      display: inline-block;
+      color: var(--spruce);
+      background: #e7efe7;
+      border-radius: 5px;
+      padding: 4px 7px;
+      font-size: 12px;
+      font-weight: 780;
+      margin-bottom: 12px;
+    }
+
+    .footer {
+      color: var(--muted);
+      padding: 34px 0 10px;
+      line-height: 1.5;
+      max-width: 760px;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .section-head,
+      .mock-grid,
+      .composer,
+      .roadmap {
+        grid-template-columns: 1fr;
+      }
+
+      .argument-grid,
+      .persona-grid,
+      .snippets {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .app-mock {
+        grid-template-columns: 160px minmax(0, 1fr);
+      }
+
+      .detail {
+        grid-column: 1 / -1;
+        border-left: 0;
+        border-top: 1px solid var(--rule);
+      }
+    }
+
+    @media (max-width: 680px) {
+      .page {
+        padding: 16px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .hero {
+        gap: 22px;
+      }
+
+      h1 {
+        font-size: 46px;
+      }
+
+      .argument-grid,
+      .persona-grid,
+      .snippets {
+        grid-template-columns: 1fr;
+      }
+
+      .app-mock {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .bar-left span:not(:first-child) {
+        display: none;
+      }
+
+      .popover {
+        margin-left: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand"><span class="mark" aria-hidden="true"></span>PromptDock</div>
+      <nav class="nav" aria-label="Page sections">
+        <a href="#argument">Argument</a>
+        <a href="#users">Users</a>
+        <a href="#mocks">Mocks</a>
+        <a href="#patterns">Prompt patterns</a>
+        <a href="#roadmap">Roadmap</a>
+      </nav>
+    </header>
+
+    <section class="hero" aria-labelledby="title">
+      <div>
+        <h1 id="title">A macOS command shelf for reusable AI prompts.</h1>
+        <p class="lede">Software engineers, IT operators, and consultants repeat a surprising amount of prompt work: code review setups, incident summaries, ticket rewrites, stakeholder updates, SQL explanations, cloud runbooks, and client-specific formatting. PromptDock turns those prompts into a searchable menu bar utility with variables, context packs, and team-ready libraries.</p>
+        <div class="hero-actions">
+          <a class="button" href="#mocks">View mocks</a>
+          <a class="button secondary" href="#roadmap">Read MVP scope</a>
+        </div>
+      </div>
+      <div class="product-frame" aria-label="Main app mock">
+        <div class="mac-strip">
+          <div class="traffic"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+          <span>PromptDock Library</span>
+          <span>⌘K</span>
+        </div>
+        <div class="app-mock">
+          <aside class="sidebar">
+            <div class="side-title">Collections</div>
+            <div class="side-item active"><span>Engineering</span><span>42</span></div>
+            <div class="side-item"><span>Incidents</span><span>18</span></div>
+            <div class="side-item"><span>Consulting</span><span>25</span></div>
+            <div class="side-item"><span>Personal</span><span>12</span></div>
+            <div class="side-title" style="margin-top:18px;">Smart views</div>
+            <div class="side-item"><span>Recently used</span><span>9</span></div>
+            <div class="side-item"><span>Needs review</span><span>6</span></div>
+          </aside>
+          <div class="main-pane">
+            <div class="search-row">
+              <div class="search">⌕ Find a prompt, tag, tool, or variable</div>
+              <button class="icon-button" title="Add prompt">+</button>
+            </div>
+            <div class="prompt-list">
+              <article class="prompt-row selected">
+                <div class="prompt-head"><span>Code review: risk-first pass</span><span>⌘1</span></div>
+                <div class="prompt-meta"><span class="tag">codex</span><span class="tag">review</span><span>used 26 times</span></div>
+              </article>
+              <article class="prompt-row">
+                <div class="prompt-head"><span>Explain production log cluster</span><span>⌘2</span></div>
+                <div class="prompt-meta"><span class="tag">sre</span><span class="tag">logs</span><span>last used today</span></div>
+              </article>
+              <article class="prompt-row">
+                <div class="prompt-head"><span>Rewrite client update in concise tone</span><span>⌘3</span></div>
+                <div class="prompt-meta"><span class="tag">consulting</span><span class="tag">status</span><span>shared</span></div>
+              </article>
+              <article class="prompt-row">
+                <div class="prompt-head"><span>Convert notes to Jira acceptance criteria</span><span>⌘4</span></div>
+                <div class="prompt-meta"><span class="tag">pm</span><span class="tag">jira</span><span>template</span></div>
+              </article>
+            </div>
+          </div>
+          <aside class="detail">
+            <div class="editor-title">Prompt editor</div>
+            <div class="template-box">Review this change as a senior engineer.
+
+Focus on <span class="slot">{{risk_area}}</span>.
+Return:
+1. Blocking bugs
+2. Missing tests
+3. Clear next action</div>
+            <div class="detail-actions">
+              <button class="mini-action">Copy</button>
+              <button class="mini-action">Run fill-in</button>
+              <button class="mini-action">Pin</button>
+              <button class="mini-action">Share</button>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="argument">
+      <div class="section-head">
+        <h2>Why this deserves to exist.</h2>
+        <p class="section-note">The winning product is not just a snippet manager. It is a prompt operating layer: fast enough for menu bar use, structured enough for teams, and plain enough that non-technical users trust it.</p>
+      </div>
+      <div class="argument-grid">
+        <article class="argument">
+          <h3>Prompt reuse is workflow memory</h3>
+          <p>Repeated prompts encode how a person likes work to be framed. Losing them in random notes files makes every agent session start from scratch.</p>
+        </article>
+        <article class="argument">
+          <h3>The menu bar is the right surface</h3>
+          <p>Prompts are needed while someone is already inside Terminal, Codex, Claude Code, Slack, Jira, or a browser. A full app should be optional.</p>
+        </article>
+        <article class="argument">
+          <h3>Variables beat static snippets</h3>
+          <p>Useful prompts usually have slots: repo name, audience, severity, client tone, incident ID, output format. Fillable prompts make reuse precise.</p>
+        </article>
+        <article class="argument">
+          <h3>Teams need governance</h3>
+          <p>IT and consulting teams need shared prompt libraries, approved wording, redaction reminders, ownership, and review dates.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="users">
+      <div class="section-head">
+        <h2>Primary users and jobs.</h2>
+        <p class="section-note">The same core product works across roles because the common job is controlled repetition: use the right prompt, with the right context, in the right tone.</p>
+      </div>
+      <div class="persona-grid">
+        <article class="persona">
+          <h3>Software engineer</h3>
+          <p>Lives in editor, terminal, GitHub, and AI coding agents.</p>
+          <ul>
+            <li>Paste code review prompts into Codex or Claude Code.</li>
+            <li>Keep repo-specific conventions and test commands.</li>
+            <li>Turn bug notes into reproduction prompts.</li>
+          </ul>
+        </article>
+        <article class="persona">
+          <h3>IT and SRE operator</h3>
+          <p>Handles tickets, incidents, logs, access requests, and compliance language.</p>
+          <ul>
+            <li>Summarize incidents from notes and logs.</li>
+            <li>Generate user-facing outage updates.</li>
+            <li>Apply approved security phrasing.</li>
+          </ul>
+        </article>
+        <article class="persona">
+          <h3>Management consultant</h3>
+          <p>Reuses analysis frames, meeting follow-ups, executive summaries, and client tone.</p>
+          <ul>
+            <li>Convert raw notes to slide-ready synthesis.</li>
+            <li>Adapt wording by client and seniority.</li>
+            <li>Maintain reusable discovery questions.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="mocks">
+      <div class="section-head">
+        <h2>Mock 1: menu bar quick insert.</h2>
+        <p class="section-note">The app should feel like Spotlight for prompts. Open it, type two letters, select, fill variables, copy or paste into the current app.</p>
+      </div>
+      <div class="mock-grid">
+        <div class="menu-bar-scene">
+          <div class="desktop-bar">
+            <div class="bar-left"><strong>Finder</strong><span>File</span><span>Edit</span><span>View</span><span>Window</span></div>
+            <div class="bar-right"><span class="menu-glyph">P</span><span>Wi-Fi</span><span>10:24</span></div>
+          </div>
+          <div class="popover">
+            <div class="palette-search">⌕ review risk prod</div>
+            <div class="quick-row active">
+              <div>
+                <div class="quick-title">Code review: risk-first pass</div>
+                <div class="quick-sub">Engineering · asks for blockers, tests, and next action</div>
+              </div>
+              <span class="shortcut">↩ paste</span>
+            </div>
+            <div class="quick-row">
+              <div>
+                <div class="quick-title">Production incident summary</div>
+                <div class="quick-sub">SRE · timeline, customer impact, follow-up owners</div>
+              </div>
+              <span class="shortcut">⌘C</span>
+            </div>
+            <div class="quick-row">
+              <div>
+                <div class="quick-title">Executive status update</div>
+                <div class="quick-sub">Consulting · concise, decision-oriented, no filler</div>
+              </div>
+              <span class="shortcut">⌥↩</span>
+            </div>
+          </div>
+        </div>
+        <div class="mock-caption">
+          <h3>Key interaction</h3>
+          <p>Keyboard-first search, recent prompts, pinning, and quick paste. The menu bar app should not require people to manage libraries during flow; it should only help them retrieve and fill.</p>
+        </div>
+      </div>
+
+      <div class="section-head">
+        <h2>Mock 2: variable composer.</h2>
+        <p class="section-note">When a prompt has placeholders, the user gets a compact composer before paste. This avoids editing fragile prompt text by hand.</p>
+      </div>
+      <div class="mock-grid">
+        <div class="composer">
+          <aside class="var-panel">
+            <div class="field">
+              <label for="repo">Repository</label>
+              <div id="repo" class="fake-input">billing-service</div>
+            </div>
+            <div class="field">
+              <label for="risk">Risk area</label>
+              <div id="risk" class="fake-input">auth, data migration, retries</div>
+            </div>
+            <div class="field">
+              <label for="tone">Output style</label>
+              <div id="tone" class="fake-input">brief, blocking issues first</div>
+            </div>
+            <button class="button" style="width:100%;margin-top:6px;">Paste filled prompt</button>
+          </aside>
+          <div class="output-panel">
+            <div class="toolbar">
+              <div class="segmented">
+                <button class="segment active">Preview</button>
+                <button class="segment">Template</button>
+                <button class="segment">History</button>
+              </div>
+              <button class="mini-action">Copy</button>
+            </div>
+            <div class="preview">Review the change in billing-service as a senior engineer.
+Focus especially on auth, data migration, retries.
+
+Return findings in this order:
+1. Blocking bugs with exact file references
+2. Missing tests or risky gaps
+3. Clear next action
+
+Keep the response brief and put blocking issues first.</div>
+          </div>
+        </div>
+        <div class="mock-caption">
+          <h3>Why it matters</h3>
+          <p>Variables let one prompt serve many contexts without duplicating near-identical copies. This becomes critical for consultants and IT teams who reuse patterns with different clients, systems, and policies.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="patterns">
+      <div class="section-head">
+        <h2>Starter prompt patterns.</h2>
+        <p class="section-note">The product can ship with editable examples, but the strongest value is importing the user’s existing Sublime Text prompts and turning them into structured templates.</p>
+      </div>
+      <div class="snippets">
+        <article class="snippet">
+          <strong>Engineer</strong>
+          <code>Act as a senior engineer reviewing {{change_summary}}.
+Prioritize correctness, data loss, security, and tests.
+Return only actionable findings.</code>
+        </article>
+        <article class="snippet">
+          <strong>IT operator</strong>
+          <code>Summarize this incident for {{audience}}.
+Include timeline, impact, current status, owner, and next update time.
+Avoid speculation.</code>
+        </article>
+        <article class="snippet">
+          <strong>Consultant</strong>
+          <code>Turn these notes into an executive-ready update.
+Use {{client_tone}} tone.
+Separate decisions, risks, asks, and next steps.</code>
+        </article>
+      </div>
+    </section>
+
+    <section id="roadmap">
+      <div class="section-head">
+        <h2>Recommended product shape.</h2>
+        <p class="section-note">Start narrow: local-first prompt library, menu bar retrieval, variables, and import. Add team and AI-agent integrations after the core habit is proven.</p>
+      </div>
+      <div class="roadmap">
+        <article class="priority">
+          <span class="status">MVP</span>
+          <h3>Personal prompt library</h3>
+          <ul class="priority-list">
+            <li>Add, edit, delete, duplicate, tag, favorite.</li>
+            <li>Menu bar search with copy and paste actions.</li>
+            <li>Variables with remembered defaults.</li>
+            <li>Import from plain text, Markdown, and folders.</li>
+            <li>Local encrypted storage and iCloud sync option.</li>
+          </ul>
+        </article>
+        <article class="priority">
+          <span class="status">Next</span>
+          <h3>Power features</h3>
+          <ul class="priority-list">
+            <li>Prompt health: unused, duplicate, missing variables.</li>
+            <li>App-specific suggestions for Terminal, Slack, browser, Jira.</li>
+            <li>Context packs for repo rules, client style, and policies.</li>
+            <li>Shared team libraries with approvals and review dates.</li>
+            <li>One-click handoff to Codex, Claude Code, ChatGPT, and clipboard.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Positioning thought: the product should avoid being “another notes app.” The sharper promise is: keep your proven AI instructions one keystroke away, fill them correctly, and reuse them without breaking focus.</p>
+    </footer>
+  </main>
+</body>
+</html>
