@@ -12,9 +12,9 @@ https://github.com/sukeesh/promptdock/releases/latest
 
 ## Screenshots
 
-![PromptDock main window](docs/images/promptdock-main.png)
+![PromptDock main window](docs/images/promptdock-main-real.png)
 
-![PromptDock menu bar prompt picker](docs/images/promptdock-menu-bar.png)
+![PromptDock menu bar prompt picker](docs/images/promptdock-menu-bar-real.png)
 
 ## Features
 
