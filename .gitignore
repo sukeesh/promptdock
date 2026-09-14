@@ -19,6 +19,7 @@ xcuserdata/
 *.xcodeproj/xcuserdata/
 
 # Build products
+dist/
 *.app
 *.dSYM
 *.ipa
@@ -35,4 +36,3 @@ temp/
 .env
 .env.*
 !.env.example
-
